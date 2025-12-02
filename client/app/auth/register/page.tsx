@@ -34,6 +34,7 @@ export default function Register() {
       if (!res.ok) throw new Error("Failed to create account");
 
       setNotice({ type: "success", message: "Account created successfully!" });
+      target.reset();
 
     } catch (err: unknown) {
       if (err instanceof Error) {
@@ -51,11 +52,13 @@ export default function Register() {
   return (
     <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <img
-          alt="Payment Share"
-          src="https://www.citypng.com/public/uploads/preview/hd-black-hand-to-hand-money-cash-payment-icon-transparent-png-701751694974663tfjsmuftvt.png"
-          className="mx-auto h-10 w-auto"
-        />
+        <a href="/" className="logo">
+          <img
+            alt="Payment Share"
+            src="https://www.citypng.com/public/uploads/preview/hd-black-hand-to-hand-money-cash-payment-icon-transparent-png-701751694974663tfjsmuftvt.png"
+            className="mx-auto h-10 w-auto"
+          />
+        </a>
         <h2 className="mt-10 text-center text-2xl font-bold text-white">
           Create your account
         </h2>
@@ -109,12 +112,6 @@ export default function Register() {
                 Password
               </label>
               <div className="text-sm">
-                <a
-                  href="#"
-                  className="font-semibold text-indigo-400 hover:text-indigo-300"
-                >
-                  Forgot password?
-                </a>
               </div>
             </div>
             <div className="mt-2">
