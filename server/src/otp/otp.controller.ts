@@ -2,14 +2,22 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { OtpService } from './otp.service';
 import { CreateOtpDto } from './dto/create-otp.dto';
 import { UpdateOtpDto } from './dto/update-otp.dto';
+import { VerifyOTPDto } from './dto/verify.dto';
 
 @Controller('otp')
 export class OtpController {
-  constructor(private readonly otpService: OtpService) {}
+  constructor(
+    private readonly otpService: OtpService,
+  ) {}
 
   @Post("create")
   create(@Body() createOtpDto: CreateOtpDto) {
     return this.otpService.create(createOtpDto);
+  }
+
+  @Post("verify")
+  verifyOTP(@Body() verifyOTPDto: VerifyOTPDto ) {
+    return this.otpService.verifyOTP(verifyOTPDto);
   }
 
   @Get("find-all")

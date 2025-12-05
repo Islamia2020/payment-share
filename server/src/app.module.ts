@@ -8,6 +8,7 @@ import { User } from './users/user.entity';
 import { MailModule } from './mail/mail.module';
 import { OtpModule } from './otp/otp.module';
 import { Otp } from './otp/entities/otp.entity';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -26,7 +27,8 @@ import { Otp } from './otp/entities/otp.entity';
     }),
     UsersModule,
     MailModule,
-    OtpModule
+    OtpModule,
+    AuthModule
   ],
   controllers: [AppController],
   providers: [AppService],
