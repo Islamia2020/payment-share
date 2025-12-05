@@ -17,14 +17,9 @@ const { secret, expiresIn } = getJwtConfig();
       isGlobal: true
     }),
     TypeOrmModule.forFeature([Otp, User]), 
-    PassportModule,
-    JwtModule.register({
-      secret: secret,
-      signOptions: { expiresIn: Number(expiresIn) },
-    }),
   ],
   controllers: [OtpController],
   providers: [OtpService, AuthService],
-  exports: [OtpService, JwtModule]
+  exports: [OtpService]
 })
 export class OtpModule {}

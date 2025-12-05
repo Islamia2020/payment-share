@@ -1,5 +1,5 @@
 // src/auth/auth.module.ts
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { AuthService } from './auth.service';
@@ -9,6 +9,7 @@ import { getJwtConfig } from 'src/common/jwt_secret';
 
 const { secret, expiresIn } = getJwtConfig();
 
+@Global()
 @Module({
   imports: [
     ConfigModule.forRoot({ 
