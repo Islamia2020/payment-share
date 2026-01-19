@@ -10,19 +10,17 @@ import {
   UserPlus, 
   UserCheck, 
   UserX, 
-  Mail, 
   MoreVertical,
-  Edit,
   Trash2,
   Eye,
   Search,
-  Filter,
   Download,
   ChevronUp,
   ChevronDown,
   RefreshCw,
   Plus
 } from 'lucide-react';
+import { useParams } from 'next/navigation';
 
 interface User {
   id: string;
@@ -63,6 +61,7 @@ export default function UsersPage() {
   const inActiveUsers = users.filter(user => user.status === "Inactive" );
   const pendingUsers = users.filter(user => user.status === "Pending" );
   const totalUsers = users.length;
+  const id = useParams(); // here is the id given in url
 
     const userStats = [
         { name: 'Total Users', value: totalUsers.toString(), change: '+8.2%', icon: Users },
@@ -199,29 +198,14 @@ export default function UsersPage() {
               </div>
               
               <div className="flex flex-wrap items-center gap-3">
-                {/* Search */}
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-                  <input
-                    type="text"
-                    placeholder="Search users..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-9 pr-4 py-2 w-64 border border-gray-300 rounded-lg text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-                  />
-                </div>
 
                 {/* Action Buttons */}
                 <div className="flex items-center gap-2">
-                  <button className="px-3 py-2 border border-gray-300 rounded-lg text-sm hover:bg-gray-50 flex items-center gap-2">
-                    <Filter className="h-4 w-4" />
-                    Filter
-                  </button>
-                  <button className="px-3 py-2 border border-gray-300 rounded-lg text-sm hover:bg-gray-50 flex items-center gap-2">
+                  <button className="px-3 py-2 border cursor-pointer text-gray-700 border-gray-300 rounded-lg text-sm hover:bg-gray-50 flex items-center gap-2">
                     <Download className="h-4 w-4" />
                     Export
                   </button>
-                  <button className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm hover:bg-blue-700 flex items-center gap-2">
+                  <button className="px-4 py-2 bg-blue-600 cursor-pointer text-white rounded-lg text-sm hover:bg-blue-700 flex items-center gap-2">
                     <Plus className="h-4 w-4" />
                     Add User
                   </button>
@@ -231,10 +215,21 @@ export default function UsersPage() {
 
             {/* Filters */}
             <div className="mt-4 flex flex-wrap items-center gap-3">
+              {/* Search */}
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                <input
+                  type="text"
+                  placeholder="Search users..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="text-gray-700 pl-9 pr-4 py-2 w-64 border border-gray-300 rounded-lg text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                />
+              </div>
               <select 
                 value={selectedRole}
                 onChange={(e) => setSelectedRole(e.target.value)}
-                className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                className="px-3 text-gray-700 py-2 border border-gray-300 rounded-lg text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
               >
                 <option value="All">All Roles</option>
                 <option value="Admin">Admin</option>
@@ -245,7 +240,7 @@ export default function UsersPage() {
               <select 
                 value={selectedStatus}
                 onChange={(e) => setSelectedStatus(e.target.value)}
-                className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                className="px-3 text-gray-700 py-2 border border-gray-300 rounded-lg text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
               >
                 <option value="All">All Status</option>
                 <option value="Active">Active</option>
@@ -259,7 +254,7 @@ export default function UsersPage() {
                   setSelectedStatus('All');
                   setSearchTerm('');
                 }}
-                className="px-3 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg flex items-center gap-1"
+                className="px-3 cursor-pointer py-2 text-sm text-gray-700 hover:text-gray-900 hover:bg-red-50 rounded-lg flex items-center gap-1"
               >
                 <RefreshCw className="h-3 w-3" />
                 Reset
@@ -413,28 +408,24 @@ export default function UsersPage() {
                       <div className="relative">
                         <button
                           onClick={() => setActionMenuOpen(actionMenuOpen === user.id ? null : user.id)}
-                          className="p-1 hover:bg-gray-100 rounded"
+                          className="p-1 hover:bg-gray-100 rounded cursor-pointer"
                         >
                           <MoreVertical className="h-4 w-4 text-gray-500" />
                         </button>
                         
                         {actionMenuOpen === user.id && (
                           <div className="absolute right-0 mt-2 w-40 bg-white rounded-lg shadow-lg border py-1 z-10">
-                            <button className="flex items-center w-full px-3 py-2 text-sm text-gray-700 hover:bg-gray-50">
+                            <a href={`/dashboard/users/${user.id}`} className="flex cursor-pointer items-center w-full px-3 py-2 text-sm text-gray-700 hover:bg-gray-50">
                               <Eye className="h-3.5 w-3.5 mr-2" />
                               View
-                            </button>
-                            <button className="flex items-center w-full px-3 py-2 text-sm text-gray-700 hover:bg-gray-50">
-                              <Edit className="h-3.5 w-3.5 mr-2" />
-                              Edit
-                            </button>
-                            <button 
+                            </a>
+                            <a 
                               onClick={() => handleDeleteUser(user.id)}
-                              className="flex items-center w-full px-3 py-2 text-sm text-red-600 hover:bg-red-50"
+                              className="flex cursor-pointer items-center w-full px-3 py-2 text-sm text-red-600 hover:bg-red-50"
                             >
                               <Trash2 className="h-3.5 w-3.5 mr-2" />
                               Delete
-                            </button>
+                            </a>
                           </div>
                         )}
                       </div>

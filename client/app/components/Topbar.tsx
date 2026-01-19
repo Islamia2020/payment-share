@@ -157,13 +157,13 @@ export default function Topbar({ onMenuClick, user, pageTitle }: TopbarProps) {
 
               {/* Dropdown items */}
               <div className="py-1">
-                <button
+                <a href={`/dashboard/suers/${user.id}`}
                   onClick={() => setIsProfileOpen(false)}
                   className="flex cursor-pointer items-center w-full px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50"
                 >
                   <User className="mr-3 h-4 w-4 text-gray-400" />
                   Your Profile
-                </button>
+                </a>
                 
                 <button
                   onClick={() => setIsProfileOpen(false)}
